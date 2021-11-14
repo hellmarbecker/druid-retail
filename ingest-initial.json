@@ -1,0 +1,61 @@
+{
+  "type": "index_parallel",
+  "spec": {
+    "ioConfig": {
+      "type": "index_parallel",
+      "inputSource": {
+        "type": "local",
+        "baseDir": "/Users/hellmarbecker/druid-retail",
+        "filter": "eshop.*.csv"
+      },
+      "inputFormat": {
+        "type": "csv",
+        "findColumnsFromHeader": true
+      }
+    },
+    "tuningConfig": {
+      "type": "index_parallel",
+      "partitionsSpec": {
+        "type": "hashed"
+      },
+      "forceGuaranteedRollup": true,
+      "maxNumConcurrentSubTasks": 2
+    },
+    "dataSchema": {
+      "dataSource": "druid-retail",
+      "timestampSpec": {
+        "column": "dt",
+        "format": "auto"
+      },
+      "dimensionsSpec": {
+        "dimensions": [
+          {
+            "type": "string",
+            "name": "oid"
+          },
+          {
+            "type": "string",
+            "name": "action"
+          },
+          {
+            "type": "string",
+            "name": "cid"
+          },
+          {
+            "type": "string",
+            "name": "sku"
+          },
+          {
+            "type": "double",
+            "name": "revenue"
+          }
+        ]
+      },
+      "granularitySpec": {
+        "queryGranularity": "none",
+        "rollup": false,
+        "segmentGranularity": "day"
+      }
+    }
+  }
+}
